@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Tara (Shraddha) ✨</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Tara ✨</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&family=Orbitron:wght@500&display=swap" rel="stylesheet">
 </head>
@@ -11,9 +11,8 @@
 
     <div class="stars-container"></div>
     <div class="moon"></div>
-    <div class="floating-hearts"></div>
 
-    <audio id="bg-music" loop>
+    <audio id="bg-music" loop preload="auto">
         <source src="zaroor.mp3" type="audio/mpeg">
     </audio>
 
@@ -24,49 +23,42 @@
                 <div id="lock-icon" class="pulse-glow">🌟</div>
                 <h2 class="status-text neon-text">For Your Eyes Only</h2>
                 <p class="sub-text">Hi Butkiii, ek surprise hai tere liye...</p>
-                <button id="unlock-btn" class="btn-glow">UNLOCK MAGIC ❤️</button>
+                <button id="unlock-btn" class="btn-glow clickable-element">UNLOCK MAGIC ❤️</button>
             </div>
         </section>
 
         <section id="step3" class="screen">
-            <div class="loader-container">
+            <div class="loader-container glass-box">
                 <div class="heart-spinner">❤️</div>
                 <p class="loading-text">1.5 saal ki yaadein collect ho rahi hain...</p>
                 <div class="progress-container">
                     <div class="progress-bar"></div>
                 </div>
-                <button id="timer-next-btn" class="btn-cute disabled" disabled>Loading...</button>
+                <button id="timer-next-btn" class="btn-glow disabled" disabled>Loading...</button>
             </div>
         </section>
 
         <section id="step4" class="screen">
             <div class="greeting-content glass-card">
                 <h1 class="heart-beat">Happy Birthday, Shraddha! ❤️</h1>
-                <div class="wish-text-container">
-                    <p class="fade-in-text">Today is all about you, and I hope your day is filled with laughter and love.</p>
-                    <p class="fade-in-text delay-1">Tu meri life ka wo "Tara" hai jo hamesha chamakta rehta hai. ✨</p>
-                </div>
+                <p class="fade-in-text">Today is all about you... ✨</p>
                 <button id="ready-btn" class="btn-glow">Ready for Memories? 😍</button>
             </div>
         </section>
 
         <section id="step5" class="screen">
             <div class="memory-box glass-box">
-                <h3 class="box-title">Our Journey (2024 - 2025) ⭐</h3>
-                <div id="typewriter-text" class="scrollable-content">
-                    </div>
-                <button id="memories-next-btn" class="btn-cute hidden">Next Chapter →</button>
+                <h3 class="box-title">Our Journey ⭐</h3>
+                <div id="typewriter-text" class="scrollable-content"></div>
+                <button id="memories-next-btn" class="btn-glow hidden">Next →</button>
             </div>
         </section>
 
         <section id="step6" class="screen">
             <div class="mini-wish glass-card">
                 <h2 class="cute-title">Stay Happy Butkiii 🩷</h2>
-                <div class="personal-note">
-                    <p>"Sundi ta gal vi jarur honi ae..." 🎵</p>
-                    <p>I hope 2026 mein hum saath rahein. Nazar bachakar rakhna ok? 💫</p>
-                </div>
-                <button id="end-btn" class="btn-glow">The Surprise Finale 🎂</button>
+                <p>Nazar bachakar rakhna ok? 💫</p>
+                <button id="end-btn" class="btn-glow">Final Surprise 🎂</button>
             </div>
         </section>
 
@@ -76,15 +68,10 @@
                     <div class="layer layer-bottom"></div>
                     <div class="layer layer-middle"></div>
                     <div class="layer layer-top"></div>
-                    <div class="candle">
-                        <div class="flame"></div>
-                    </div>
+                    <div class="candle"><div class="flame"></div></div>
                 </div>
-                
                 <div id="final-popup" class="pop-up">
                     <h1 class="glow-text">HBD Meri Shraddha ❤️</h1>
-                    <div class="floating-emojis">🎈 🥳 🎁 🎂</div>
-                    <p class="final-note">Forever & Always Yours.</p>
                 </div>
             </div>
             <canvas id="confetti-canvas"></canvas>
