@@ -1,10 +1,12 @@
-/* --- EXTREME MAGICAL CSS --- */
+/* --- EXTREME FIXED CSS --- */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&family=Orbitron:wght@500&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* Mobile par touch highlight remove karne ke liye */
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -13,106 +15,116 @@ body {
     overflow: hidden;
     color: #ffffff;
     height: 100vh;
+    width: 100vw;
+    /* Text selection (copy) block karne ke liye */
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none; /* Prevents accidental zooming/scrolling */
 }
 
-/* --- DYNAMIC STARRY BACKGROUND --- */
+/* --- MAGICAL BACKGROUND --- */
 .stars-container {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1;
+    z-index: 1; /* Lowest Layer */
     background: url('https://www.transparenttextures.com/patterns/stardust.png');
-    animation: twinkle 5s infinite linear;
+    pointer-events: none;
 }
 
 .moon {
     position: absolute;
-    top: 40px;
-    right: 40px;
-    width: 60px;
-    height: 60px;
+    top: 40px; right: 40px;
+    width: 50px; height: 50px;
     background: #fdfae5;
     border-radius: 50%;
-    box-shadow: 0 0 30px #fdfae5, 0 0 80px rgba(253, 250, 229, 0.3);
-    z-index: -1;
-}
-
-@keyframes twinkle {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
+    box-shadow: 0 0 30px #fdfae5;
+    z-index: 1;
+    pointer-events: none;
 }
 
 .container {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    perspective: 1000px;
+    position: relative;
+    z-index: 10; /* Container background se upar rahega */
 }
 
-/* --- NEON GLASS CARDS --- */
-.glass-box, .glass-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 30px;
-    padding: 40px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 20, 147, 0.1);
-    text-align: center;
-}
-
+/* --- SCREENS --- */
 .screen {
     display: none;
     position: absolute;
     width: 90%;
-    max-width: 480px;
-    animation: slideUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: scale(0.8) translateY(100px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
+    max-width: 420px;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    z-index: 20;
 }
 
 .screen.active {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    animation: slideUp 0.6s ease-out forwards;
 }
 
-/* --- GLOWING BUTTONS --- */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- GLASS BOX --- */
+.glass-box {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 25px;
+    padding: 30px;
+    width: 100%;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* --- THE ULTIMATE BUTTON FIX --- */
 .btn-glow {
     background: linear-gradient(45deg, #ff1493, #9d00ff);
     color: white;
     border: none;
-    padding: 15px 40px;
+    padding: 16px 35px;
     border-radius: 50px;
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: 0.4s;
-    box-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer !important;
     margin-top: 25px;
-    text-transform: uppercase;
+    box-shadow: 0 0 20px rgba(255, 20, 147, 0.6);
+    
+    /* CLICK FIX LOGIC */
+    position: relative;
+    z-index: 9999 !important; /* Isse button hamesha sabse upar rahega */
+    pointer-events: auto !important; /* Click allow karega */
+    touch-action: manipulation;
+    display: inline-block;
+    text-decoration: none;
 }
 
-.btn-glow:hover {
-    transform: scale(1.1) translateY(-5px);
-    box-shadow: 0 0 40px #ff1493;
+.btn-glow:active {
+    transform: scale(0.92);
+    box-shadow: 0 0 10px #ff1493;
 }
 
 .btn-glow.disabled {
     background: #444;
     box-shadow: none;
-    cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 0.5;
+    pointer-events: none;
 }
 
-/* --- MEMORY BOX (TYPEWRITER) --- */
+/* --- TYPEWRITER & MEMORY BOX --- */
 .memory-box {
-    height: 65vh;
-    width: 100%;
+    height: 60vh;
     display: flex;
     flex-direction: column;
 }
@@ -121,59 +133,36 @@ body {
     flex-grow: 1;
     overflow-y: auto;
     text-align: left;
-    font-size: 0.95rem;
-    line-height: 1.8;
-    padding-right: 15px;
-    color: #ffd1dc; /* Soft Pinkish White */
-    font-style: italic;
+    line-height: 1.7;
+    padding: 15px;
+    font-size: 14px;
+    color: #ffd1dc;
+    /* Isme scrolling allow karni hai */
+    touch-action: pan-y; 
+    user-select: text; /* Sirf message copy karne ke liye (optional) */
 }
 
-.scrollable-content::-webkit-scrollbar { width: 4px; }
-.scrollable-content::-webkit-scrollbar-thumb { background: #ff1493; border-radius: 10px; }
-
-/* --- THE 3D GLOWING CAKE --- */
-.cake {
-    position: relative;
-    width: 180px;
-    height: 120px;
-    margin-top: 50px;
-    filter: drop-shadow(0 0 25px rgba(255, 20, 147, 0.4));
-}
-
-.layer { position: absolute; border-radius: 15px; width: 100%; box-shadow: inset 0 -5px 10px rgba(0,0,0,0.2); }
-.layer-bottom { height: 50px; background: #ff4d6d; bottom: 0; }
-.layer-middle { height: 40px; background: #ff758f; bottom: 50px; width: 80%; left: 10%; }
-.layer-top { height: 35px; background: #ff85a2; bottom: 90px; width: 60%; left: 20%; }
-
-.candle {
-    position: absolute; width: 8px; height: 35px; background: #fff;
-    bottom: 125px; left: 50%; transform: translateX(-50%); border-radius: 4px;
-}
-
+/* --- CAKE --- */
+.cake { position: relative; width: 160px; height: 110px; margin-top: 40px; }
+.layer { position: absolute; border-radius: 12px; width: 100%; }
+.layer-bottom { height: 45px; background: #ff4d6d; bottom: 0; }
+.layer-middle { height: 35px; background: #ff758f; bottom: 45px; width: 80%; left: 10%; }
+.layer-top { height: 30px; background: #ff85a2; bottom: 80px; width: 60%; left: 20%; }
+.candle { position: absolute; width: 8px; height: 30px; background: #fff; bottom: 110px; left: 47%; border-radius: 4px; }
 .flame {
     position: absolute; width: 12px; height: 18px; 
-    background: radial-gradient(circle, #fff, #ffa500, #ff4500);
-    top: -20px; left: -2px; border-radius: 50% 50% 20% 20%;
+    background: orange; top: -18px; border-radius: 50%;
     animation: flicker 0.1s infinite alternate;
-    box-shadow: 0 0 20px #ff4500;
+    box-shadow: 0 0 15px orange;
 }
 
-@keyframes flicker {
-    from { opacity: 0.8; transform: scale(1) rotate(-2deg); }
-    to { opacity: 1; transform: scale(1.2) rotate(2deg); }
-}
+@keyframes flicker { from { opacity: 0.8; transform: scale(1); } to { opacity: 1; transform: scale(1.1); } }
 
-/* --- TEXT ANIMATIONS --- */
 .neon-text {
     font-family: 'Dancing Script', cursive;
-    font-size: 2.8rem;
-    background: linear-gradient(to bottom, #fff, #ff69b4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 10px rgba(255, 20, 147, 0.8));
+    font-size: 2.5rem;
+    color: #fff;
+    text-shadow: 0 0 10px #ff1493;
 }
-
-.heart-beat { animation: hb 1.2s infinite; color: #ff1493; font-family: 'Dancing Script'; font-size: 2.5rem; }
-@keyframes hb { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
 
 .hidden { display: none; }
