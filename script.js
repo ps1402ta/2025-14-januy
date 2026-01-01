@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const screens = document.querySelectorAll(".screen");
-    const music = document.getElementById("bg-music");
-    
-    // TERA EMOTIONAL MESSAGE (Poora 1.5 saal ka safar)
-    const longMessage = `Sun yaar…
+const screens = document.querySelectorAll(".screen");
+const music = document.getElementById("bg-music");
+
+// TERA EMOTIONAL MESSAGE (Poora 1.5 saal ka safar)  
+const longMessage = `Sun yaar…
+
 Mujhe pata hai humare beech aaj‑kal kuch theek nahi chal raha,
 shayad kuch hai bhi nahi.
 Par main bas itna chahta hoon ki tu jo chahe, wo tujhe mil jaaye.
@@ -48,117 +49,115 @@ Agar tu saath rahi to main sab karke dikhaunga. Par agar tu aise hi hurt karti r
 Ly ❤️‍🩹
 Happpppppyyyy Birthday meri Shraddha 🎂❤️`;
 
-    // SCREEN NAVIGATION LOGIC
-    function showScreen(index) {
-        screens.forEach(s => s.classList.remove("active"));
-        screens[index].classList.add("active");
-        
-        // Final Screen: Confetti Celebration
-        if (index === 5) { 
-            setTimeout(startConfetti, 500);
-        }
-    }
+// SCREEN NAVIGATION LOGIC  
+function showScreen(index) {  
+    screens.forEach(s => s.classList.remove("active"));  
+    screens[index].classList.add("active");  
+      
+    // Final Screen: Confetti Celebration  
+    if (index === 5) {   
+        setTimeout(startConfetti, 500);  
+    }  
+}  
 
+// STEP 1: UNLOCK WITH AUDIO FIX (Critical for Mobile)  
+const unlockBtn = document.getElementById("unlock-btn");  
+  
+const triggerUnlock = (e) => {  
+    e.preventDefault();  
+    music.play().catch(err => console.log("Audio Play Blocked:", err));  
+      
+    // GSAP Animation for smooth transition  
+    gsap.to("#step1-2", { opacity: 0, scale: 0.9, duration: 0.5, onComplete: () => {  
+        showScreen(1);  
+        startTimer();  
+    }});  
+};  
 
+unlockBtn.addEventListener("click", triggerUnlock);  
+unlockBtn.addEventListener("touchstart", triggerUnlock, {passive: false});  
 
-   // STEP 1: UNLOCK WITH AUDIO FIX (Critical for Mobile)
-    const unlockBtn = document.getElementById("unlock-btn");
-    
-    const triggerUnlock = (e) => {
-        e.preventDefault();
-        music.play().catch(err => console.log("Audio Play Blocked:", err));
-        
-        // GSAP Animation for smooth transition
-        gsap.to("#step1-2", { opacity: 0, scale: 0.9, duration: 0.5, onComplete: () => {
-            showScreen(1);
-            startTimer();
-        }});
-    };
+// STEP 3: PROGRESS TIMER  
+function startTimer() {  
+    const btn = document.getElementById("timer-next-btn");  
+    const bar = document.querySelector(".progress-bar");  
+    let timeLeft = 3;  
+      
+    const countdown = setInterval(() => {  
+        timeLeft--;  
+        if(bar) bar.style.width = ((3 - timeLeft) / 3) * 100 + "%";  
+          
+        if (timeLeft <= 0) {  
+            clearInterval(countdown);  
+            btn.classList.remove("disabled");  
+            btn.disabled = false;  
+            btn.innerText = "Click to Unlock Surprise ✨";  
+            gsap.from(btn, {y: 10, repeat: -1, yoyo: true, duration: 0.5});  
+        }  
+    }, 1000);  
+}  
 
-    unlockBtn.addEventListener("click", triggerUnlock);
-    unlockBtn.addEventListener("touchstart", triggerUnlock, {passive: false});
+document.getElementById("timer-next-btn").addEventListener("click", () => showScreen(2));  
 
-    // STEP 3: PROGRESS TIMER
-    function startTimer() {
-        const btn = document.getElementById("timer-next-btn");
-        const bar = document.querySelector(".progress-bar");
-        let timeLeft = 3;
-        
-        const countdown = setInterval(() => {
-            timeLeft--;
-            if(bar) bar.style.width = ((3 - timeLeft) / 3) * 100 + "%";
-            
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                btn.classList.remove("disabled");
-                btn.disabled = false;
-                btn.innerText = "Click to Unlock Surprise ✨";
-                gsap.from(btn, {y: 10, repeat: -1, yoyo: true, duration: 0.5});
-            }
-        }, 1000);
-    }
+// STEP 4: START MEMORIES  
+document.getElementById("ready-btn").addEventListener("click", () => {  
+    showScreen(3);  
+    startTypewriter();  
+});  
 
-    document.getElementById("timer-next-btn").addEventListener("click", () => showScreen(2));
+// STEP 5: TYPEWRITER (Tera Message Animation)  
+function startTypewriter() {  
+    const textElement = document.getElementById("typewriter-text");  
+    const nextBtn = document.getElementById("memories-next-btn");  
+    let i = 0;  
+    textElement.innerHTML = "";   
 
-    // STEP 4: START MEMORIES
-    document.getElementById("ready-btn").addEventListener("click", () => {
-        showScreen(3);
-        startTypewriter();
-    });
+    function type() {  
+        if (i < longMessage.length) {  
+            textElement.innerHTML += longMessage.charAt(i);  
+            i++;  
+            // Auto-Scroll to keep up with typing  
+            textElement.scrollTop = textElement.scrollHeight;  
+              
+            // Realistic speed variations  
+            let speed = (longMessage[i-1] === '.' || longMessage[i-1] === '🤍' || longMessage[i-1] === '😂') ? 500 : 40;  
+            setTimeout(type, speed);  
+        } else {  
+            nextBtn.classList.remove("hidden");  
+            gsap.from(nextBtn, { opacity: 0, scale: 1.2, duration: 1 });  
+        }  
+    }  
+    type();  
+}  
 
-    // STEP 5: TYPEWRITER (Tera Message Animation)
-    function startTypewriter() {
-        const textElement = document.getElementById("typewriter-text");
-        const nextBtn = document.getElementById("memories-next-btn");
-        let i = 0;
-        textElement.innerHTML = ""; 
+document.getElementById("memories-next-btn").addEventListener("click", () => showScreen(4));  
+document.getElementById("end-btn").addEventListener("click", () => showScreen(5));  
 
-        function type() {
-            if (i < longMessage.length) {
-                textElement.innerHTML += longMessage.charAt(i);
-                i++;
-                // Auto-Scroll to keep up with typing
-                textElement.scrollTop = textElement.scrollHeight;
-                
-                // Realistic speed variations
-                let speed = (longMessage[i-1] === '.' || longMessage[i-1] === '🤍' || longMessage[i-1] === '😂') ? 500 : 40;
-                setTimeout(type, speed);
-            } else {
-                nextBtn.classList.remove("hidden");
-                gsap.from(nextBtn, { opacity: 0, scale: 1.2, duration: 1 });
-            }
-        }
-        type();
-    }
+// FINAL FINALE: CONFETTI ENGINE  
+function startConfetti() {  
+    const end = Date.now() + (10 * 1000);  
+    const colors = ['#ff1493', '#9d00ff', '#ffffff', '#ff85a2'];  
 
-    document.getElementById("memories-next-btn").addEventListener("click", () => showScreen(4));
-    document.getElementById("end-btn").addEventListener("click", () => showScreen(5));
+    (function frame() {  
+        confetti({  
+            particleCount: 4,  
+            angle: 60,  
+            spread: 55,  
+            origin: { x: 0 },  
+            colors: colors  
+        });  
+        confetti({  
+            particleCount: 4,  
+            angle: 120,  
+            spread: 55,  
+            origin: { x: 1 },  
+            colors: colors  
+        });  
 
-    // FINAL FINALE: CONFETTI ENGINE
-    function startConfetti() {
-        const end = Date.now() + (10 * 1000);
-        const colors = ['#ff1493', '#9d00ff', '#ffffff', '#ff85a2'];
+        if (Date.now() < end) {  
+            requestAnimationFrame(frame);  
+        }  
+    }());  
+}
 
-        (function frame() {
-            confetti({
-                particleCount: 4,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-                colors: colors
-            });
-            confetti({
-                particleCount: 4,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-                colors: colors
-            });
-
-            if (Date.now() < end) {
-                requestAnimationFrame(frame);
-            }
-        }());
-    }
 });
-            
