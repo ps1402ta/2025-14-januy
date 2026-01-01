@@ -59,22 +59,34 @@ Happpppppyyyy Birthday meri Shraddha 🎂❤️`;
         }
     }
 
-    // STEP 1: UNLOCK WITH AUDIO FIX (Critical for Mobile)
-    const unlockBtn = document.getElementById("unlock-btn");
-    
-    const triggerUnlock = (e) => {
-        e.preventDefault();
-        music.play().catch(err => console.log("Audio Play Blocked:", err));
-        
-        // GSAP Animation for smooth transition
-        gsap.to("#step1-2", { opacity: 0, scale: 0.9, duration: 0.5, onComplete: () => {
-            showScreen(1);
-            startTimer();
-        }});
-    };
+    // STEP 1: SELECT AUDIO & BUTTON
+const music = document.getElementById("bg-music"); 
+const unlockBtn = document.getElementById("unlock-btn");
 
+const triggerUnlock = (e) => {
+    if (e.cancelable) e.preventDefault();
+    
+    // Audio ko refresh karke play karein
+    music.load(); 
+    music.play().catch(err => console.log("Audio Error:", err));
+    
+    // GSAP Animation
+    gsap.to("#step1-2", { 
+        opacity: 0, 
+        scale: 0.9, 
+        duration: 0.5, 
+        onComplete: () => {
+            if (typeof showScreen === "function") showScreen(1);
+            if (typeof startTimer === "function") startTimer();
+        }
+    });
+};
+
+if (unlockBtn) {
     unlockBtn.addEventListener("click", triggerUnlock);
     unlockBtn.addEventListener("touchstart", triggerUnlock, {passive: false});
+}
+    
 
     // STEP 3: PROGRESS TIMER
     function startTimer() {
